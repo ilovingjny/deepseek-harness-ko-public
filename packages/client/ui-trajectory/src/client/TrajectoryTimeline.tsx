@@ -391,7 +391,7 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
 
   if (model === null) {
     return (
-      <section ref={rootRef} className={css.root} aria-label="Trajectory timeline">
+      <section ref={rootRef} className={css.root} aria-label={t('timeline.aria')}>
         <div className={css.plot}>
           <LaneLabels t={t} />
           <div className={css.track}>
@@ -587,7 +587,7 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
   }
 
   return (
-    <section ref={rootRef} className={css.root} aria-label="Trajectory timeline">
+    <section ref={rootRef} className={css.root} aria-label={t('timeline.aria')}>
       <div className={css.plot}>
         <LaneLabels t={t} />
         <div

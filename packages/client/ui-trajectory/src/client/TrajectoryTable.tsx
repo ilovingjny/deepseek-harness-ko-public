@@ -519,6 +519,21 @@ function requestStep(group: string): number | undefined {
   return Number.isInteger(value) && value > 0 ? value : undefined
 }
 
+function compactionSeq(group: string): number | undefined {
+  if (!group.startsWith('Compaction ')) return undefined
+  const value = Number(group.slice('Compaction '.length))
+  return Number.isInteger(value) && value > 0 ? value : undefined
+}
+
+function groupLabel(t: TranslateNS<typeof NS>, group: string): string {
+  const step = requestStep(group)
+  if (step !== undefined) return t('view.step', { step })
+  const seq = compactionSeq(group)
+  if (seq !== undefined) return t('view.compaction', { seq })
+  if (group === 'Message') return t('layout.message')
+  return group
+}
+
 function requestKey(turn: number | null, group: string): string {
   return `${turn}\u0000${group}`
 }
@@ -2641,7 +2656,7 @@ export function TrajectoryTable({
             aria-controls="trajectory-detail-panel"
             aria-orientation="vertical"
             tabIndex={0}
-            title="Drag to resize. Double-click to reset."
+            title={t('details.dragToResize')}
             onDoubleClick={() => {
               setDetailsWidth(null)
               setToolRequestOffset(null)
@@ -2754,7 +2769,7 @@ export function TrajectoryTable({
                       <span className={css.detailsLocation}>
                         {selected.cell.kind === 'compacted'
                           ? sectionLabel(t, selected.turn)
-                          : `${sectionLabel(t, selected.turn)} · ${selected.group}`}
+                          : `${sectionLabel(t, selected.turn)} · ${groupLabel(t, selected.group)}`}
                       </span>
                     </>
                   )}

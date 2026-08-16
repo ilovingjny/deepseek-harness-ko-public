@@ -200,17 +200,21 @@ function LaneLabels({ t }: { t: TranslateNS<typeof NS> }) {
 }
 
 function EarlierHistoryBoundary({
+  t,
   loading,
   onHover,
   onLoad,
 }: {
+  t: TranslateNS<typeof NS>
   loading: boolean
   onHover: () => void
   onLoad: (() => void) | undefined
 }) {
   return (
     <Tooltip
-      label={loading ? 'Loading earlier history…' : 'Click to load earlier history'}
+      label={loading
+        ? t('timeline.loadingEarlierHistory')
+        : t('timeline.clickToLoadEarlierHistory')}
       side="right"
       delayMs={TIMELINE_TOOLTIP_DELAY_MS}
     >
@@ -219,7 +223,9 @@ function EarlierHistoryBoundary({
         className={css.earlierHistory}
         data-earlier-history
         data-loading={loading || undefined}
-        aria-label={loading ? 'Loading earlier history' : 'Load earlier history'}
+        aria-label={loading
+          ? t('timeline.loadingEarlierHistoryStatus')
+          : t('timeline.loadEarlierHistory')}
         aria-disabled={loading || onLoad === undefined}
         onClick={onLoad}
         onPointerEnter={(event) => {
@@ -392,6 +398,7 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
             <span className={css.empty}>{t('timeline.noTimingData')}</span>
             {hasEarlierRecords && (
               <EarlierHistoryBoundary
+                t={t}
                 loading={loadingEarlier}
                 onHover={() => { setHover(null) }}
                 onLoad={loadEarlier}
@@ -587,7 +594,7 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
           ref={trackRef}
           className={css.track}
           data-panning={panning || undefined}
-          aria-label="Timeline overview; drag horizontally to focus events"
+          aria-label={t('timeline.overviewAria')}
           tabIndex={0}
           onKeyDown={onKeyDown}
           onPointerDown={onPointerDown}
@@ -607,6 +614,7 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
         >
           {showsEarlierBoundary && (
             <EarlierHistoryBoundary
+              t={t}
               loading={loadingEarlier}
               onHover={() => { setHover(null) }}
               onLoad={loadEarlier}

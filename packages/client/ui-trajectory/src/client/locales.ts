@@ -27,6 +27,9 @@ export type TrajectoryKey =
   | 'timeline.noTimingData'
   | 'timeline.loadEarlierHistory'
   | 'timeline.loadingEarlierHistory'
+  | 'timeline.clickToLoadEarlierHistory'
+  | 'timeline.loadingEarlierHistoryStatus'
+  | 'timeline.overviewAria'
   | 'turn.input'
   | 'turn.output'
   | 'turn.think'
@@ -129,6 +132,7 @@ export type TrajectoryKey =
   | 'details.compacted'
   | 'details.assistantMessage'
   | 'details.hierarchy'
+  | 'details.dragToResize'
   | 'layout.message'
   | 'layout.toolCallOnly'
   | 'layout.initialSystemPrompt'
@@ -169,6 +173,9 @@ export const zh: Record<TrajectoryKey, string> = {
   'timeline.noTimingData': 'No timing data',
   'timeline.loadEarlierHistory': 'Load earlier history',
   'timeline.loadingEarlierHistory': 'Loading earlier history…',
+  'timeline.clickToLoadEarlierHistory': 'Click to load earlier history',
+  'timeline.loadingEarlierHistoryStatus': 'Loading earlier history',
+  'timeline.overviewAria': 'Timeline overview; drag horizontally to focus events',
   'turn.input': 'Input',
   'turn.output': 'Output',
   'turn.think': 'Think',
@@ -271,6 +278,7 @@ export const zh: Record<TrajectoryKey, string> = {
   'details.compacted': 'Compacted',
   'details.assistantMessage': 'Assistant Message',
   'details.hierarchy': 'Hierarchy',
+  'details.dragToResize': 'Drag to resize. Double-click to reset.',
   'layout.message': 'Message',
   'layout.toolCallOnly': 'Tool call only',
   'layout.initialSystemPrompt': 'Initial System Prompt',
@@ -305,6 +313,9 @@ export const en: Record<TrajectoryKey, string> = {
   'timeline.noTimingData': 'No timing data',
   'timeline.loadEarlierHistory': 'Load earlier history',
   'timeline.loadingEarlierHistory': 'Loading earlier history…',
+  'timeline.clickToLoadEarlierHistory': 'Click to load earlier history',
+  'timeline.loadingEarlierHistoryStatus': 'Loading earlier history',
+  'timeline.overviewAria': 'Timeline overview; drag horizontally to focus events',
   'turn.input': 'Input',
   'turn.output': 'Output',
   'turn.think': 'Think',
@@ -407,6 +418,7 @@ export const en: Record<TrajectoryKey, string> = {
   'details.compacted': 'Compacted',
   'details.assistantMessage': 'Assistant Message',
   'details.hierarchy': 'Hierarchy',
+  'details.dragToResize': 'Drag to resize. Double-click to reset.',
   'layout.message': 'Message',
   'layout.toolCallOnly': 'Tool call only',
   'layout.initialSystemPrompt': 'Initial System Prompt',
@@ -440,7 +452,10 @@ export const ko: Record<TrajectoryKey, string> = {
   'timeline.tools': '도구',
   'timeline.noTimingData': '시간 데이터 없음',
   'timeline.loadEarlierHistory': '이전 기록 불러오기',
-  'timeline.loadingEarlierHistory': '이전 기록 불러오는 중',
+  'timeline.loadingEarlierHistory': '이전 기록 불러오는 중…',
+  'timeline.clickToLoadEarlierHistory': '클릭하여 이전 기록 불러오기',
+  'timeline.loadingEarlierHistoryStatus': '이전 기록 불러오는 중',
+  'timeline.overviewAria': '타임라인 개요; 이벤트에 초점을 맞추려면 가로로 드래그',
   'turn.input': '입력',
   'turn.output': '출력',
   'turn.think': '추론',
@@ -543,6 +558,7 @@ export const ko: Record<TrajectoryKey, string> = {
   'details.compacted': '압축됨',
   'details.assistantMessage': '어시스턴트 메시지',
   'details.hierarchy': '계층',
+  'details.dragToResize': '드래그하여 크기 조정. 더블 클릭하여 초기화.',
   'layout.message': '메시지',
   'layout.toolCallOnly': '도구 호출만',
   'layout.initialSystemPrompt': '초기 시스템 프롬프트',

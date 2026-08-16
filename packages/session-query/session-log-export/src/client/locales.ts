@@ -10,6 +10,7 @@ export const zh = {
   'dialog.errorTitle': 'Session 导出失败',
   'dialog.close': '关闭',
   'dialog.commandFailed': '无法启动 Session 导出。',
+  'action.sessionLog': 'Session 日志',
 } as const
 
 /** English Session export strings. */
@@ -21,6 +22,7 @@ export const en: Record<keyof typeof zh, string> = {
   'dialog.errorTitle': 'Session export failed',
   'dialog.close': 'Close',
   'dialog.commandFailed': 'Could not start the Session export.',
+  'action.sessionLog': 'Session log',
 }
 
 /** Korean Session export strings. */
@@ -32,6 +34,7 @@ export const ko: Record<keyof typeof zh, string> = {
   'dialog.errorTitle': '세션 내보내기 실패',
   'dialog.close': '닫기',
   'dialog.commandFailed': '세션 내보내기를 시작하지 못했습니다.',
+  'action.sessionLog': '세션 로그',
 }
 
 /** Stable locale keys consumed by the shared modal. */

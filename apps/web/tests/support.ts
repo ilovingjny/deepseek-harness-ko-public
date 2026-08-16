@@ -17,6 +17,9 @@ export const REPO_ROOT = fileURLToPath(new URL('../../..', import.meta.url))
  */
 export const ZH_BROWSER_LOCALE = 'zh-CN'
 
+/** Browser locale used by the assembled-web Korean boot proof. */
+export const KO_BROWSER_LOCALE = 'ko-KR'
+
 /**
  * Open the standard browser-test page advertising English before client boot.
  * This keeps role locators and goldens deterministic while leaving the Host

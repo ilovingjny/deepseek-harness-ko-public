@@ -171,6 +171,8 @@ describe('directory-picker-browse client half', () => {
     expect(injected.t('browser.title')).toBe('选择工作区目录')
     expect(injected.t('browser.newFolder')).toBe('新建文件夹')
     expect(injected.t('browser.showHidden')).toBe('显示隐藏文件')
+    b.ctx.locale.setLocale('ko')
+    expect(injected.t('browser.title')).toBe('작업 공간 디렉터리 선택')
   })
 
   it('drives the injected browse calls through the hole entry', async () => {

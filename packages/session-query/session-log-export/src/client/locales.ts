@@ -23,5 +23,16 @@ export const en: Record<keyof typeof zh, string> = {
   'dialog.commandFailed': 'Could not start the Session export.',
 }
 
+/** Korean Session export strings. */
+export const ko: Record<keyof typeof zh, string> = {
+  'dialog.preparingTitle': '세션 내보내는 중',
+  'dialog.preparingDescription': '현재 세션과 하위 세션, 첨부 파일을 포함한 ZIP 파일을 준비하는 중입니다.',
+  'dialog.successTitle': '세션 다운로드 시작',
+  'dialog.successDescription': '브라우저에서 세션 ZIP 파일을 다운로드하고 있습니다.',
+  'dialog.errorTitle': '세션 내보내기 실패',
+  'dialog.close': '닫기',
+  'dialog.commandFailed': '세션 내보내기를 시작하지 못했습니다.',
+}
+
 /** Stable locale keys consumed by the shared modal. */
 export type SessionLogDownloadKey = keyof typeof zh

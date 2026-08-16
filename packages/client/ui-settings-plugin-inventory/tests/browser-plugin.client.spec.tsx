@@ -77,6 +77,8 @@ describe('ui-settings-plugin-inventory browser plugin', () => {
     await vi.waitFor(() => { expect(b.slots.entries('settings.plugins.tab')).toHaveLength(1) })
     b.locale.setLocale('en')
     expect(resolveSlotLabel(b.slots.entries('settings.plugins.tab')[0]!.options.label)).toBe('Plugin list')
+    b.locale.setLocale('ko')
+    expect(resolveSlotLabel(b.slots.entries('settings.plugins.tab')[0]!.options.label)).toBe('플러그인 목록')
 
     stop()
     expect(b.slots.entries('settings.plugins.tab')).toHaveLength(0)
@@ -88,6 +90,8 @@ describe('ui-settings-plugin-inventory browser plugin', () => {
     await fiber.dispose()
     expect(b.slots.entries('settings.plugins.tab')).toHaveLength(0)
     expect(() => b.locale.register(NS, 'zh', {})).not.toThrow()
+    expect(() => b.locale.register(NS, 'en', {})).not.toThrow()
+    expect(() => b.locale.register(NS, 'ko', {})).not.toThrow()
     await b.ctx.fiber.dispose()
   })
 })

@@ -62,6 +62,21 @@ export function apply(ctx: ClientContext): void {
         'browser.truncated': 'Too many folders to list; only the beginning is shown.',
         'browser.showHidden': 'Show hidden files',
       }],
+      ['ko', {
+        'browser.title': '작업 공간 디렉터리 선택',
+        'browser.home': '홈',
+        'browser.newFolder': '새 폴더',
+        'browser.folderName': '폴더 이름',
+        'browser.createIn': '"{name}"에 새 폴더 만들기',
+        'browser.untitledFolder': '이름 없는 폴더',
+        'browser.create': '생성',
+        'browser.cancel': '취소',
+        'browser.open': '열기',
+        'browser.editPath': '경로 편집',
+        'browser.loading': '불러오는 중…',
+        'browser.truncated': '폴더가 너무 많아 일부만 표시합니다.',
+        'browser.showHidden': '숨김 파일 표시',
+      }],
     ]
     try {
       for (const [locale, dict] of dictionaries) disposers.push(ctx.locale.register(LOCALE_NS, locale, dict))

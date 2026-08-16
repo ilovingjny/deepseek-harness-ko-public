@@ -129,18 +129,21 @@ describe('ui-settings-models apply', () => {
     b.locale.setLocale('zh')
   })
 
-  it('registers the zh/en nav dictionaries and disposes everything with the fiber', async () => {
+  it('registers the zh/en/ko nav dictionaries and disposes everything with the fiber', async () => {
     const b = await bench()
     declare(b.slots)
     const fiber = b.ctx.plugin({ inject: [...inject], apply })
     await fiber.await()
     expect(b.locale.bind('settings.models')('nav')).toBe('模型')
+    b.locale.setLocale('ko')
+    expect(b.locale.bind('settings.models')('nav')).toBe('모델')
     await fiber.dispose()
     expect(b.slots.entries('settings.section')).toHaveLength(0)
     expect(b.slots.entries('settings.onboarding')).toHaveLength(0)
     // The (ns, locale) seats are free again — the dictionary disposers ran.
     expect(() => b.locale.register('settings.models', 'zh', {})).not.toThrow()
     expect(() => b.locale.register('settings.models', 'en', {})).not.toThrow()
+    expect(() => b.locale.register('settings.models', 'ko', {})).not.toThrow()
   })
 
   it('keeps remote-browser acknowledgement in process memory', async () => {

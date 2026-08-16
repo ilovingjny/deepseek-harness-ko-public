@@ -18,3 +18,11 @@ export const en = {
   'appearance.dark': 'Dark',
   'appearance.system': 'System',
 } satisfies Record<ThemeKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  'appearance.title': '모양',
+  'appearance.light': '밝게',
+  'appearance.dark': '어둡게',
+  'appearance.system': '시스템 설정 따르기',
+} satisfies Record<ThemeKey, string>

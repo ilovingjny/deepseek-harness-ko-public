@@ -22,3 +22,13 @@ export const en = {
   'openDocument.error': 'Could not open configuration file',
   'general.nav': 'General',
 } satisfies Record<SettingsKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  'trigger': '설정',
+  'title': '설정',
+  'close': '닫기',
+  'openDocument': '구성 파일 열기',
+  'openDocument.error': '구성 파일을 열지 못했습니다',
+  'general.nav': '일반',
+} satisfies Record<SettingsKey, string>

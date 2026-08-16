@@ -29,6 +29,19 @@ export const en = {
   'confirm.enable': 'Enable Full access',
 } satisfies Record<PermissionSettingsKey, string>
 
+/** Korean dictionary. */
+export const ko = {
+  'title': '권한',
+  'description': '새 세션의 기본 권한 모드 선택',
+  'loading': '불러오는 중',
+  'unavailable': '사용할 수 없음',
+  'confirm.title': 'Full access를 사용하시겠습니까?',
+  'confirm.description': 'Full access를 사용하면 새 세션에서 확인 절차가 줄고, 민감한 작업이나 파일 수정, 외부 명령을 포함한 더 많은 작업을 직접 실행할 수 있습니다. 이후 작업을 신뢰할 수 있을 때만 사용하세요.',
+  'confirm.acknowledge': '위험을 이해했으며 계속 진행합니다',
+  'confirm.cancel': '취소',
+  'confirm.enable': 'Full access 사용',
+} satisfies Record<PermissionSettingsKey, string>
+
 /** Simplified Chinese dictionary for the current-session popup gate. */
 export const accessZh = {
   'confirm.title': '确认启用 Full access？',
@@ -48,4 +61,13 @@ export const accessEn = {
   'confirm.acknowledge': 'I understand the risks and want to continue',
   'confirm.cancel': 'Cancel',
   'confirm.enable': 'Enable Full access',
+} satisfies Record<PermissionAccessKey, string>
+
+/** Korean dictionary for the current-session popup gate. */
+export const accessKo = {
+  'confirm.title': 'Full access를 사용하시겠습니까?',
+  'confirm.description': 'Full access를 사용하면 확인 절차가 줄고 에이전트가 민감한 작업이나 파일 수정, 외부 명령을 포함한 더 많은 작업을 직접 실행할 수 있습니다. 현재 작업을 신뢰할 수 있을 때만 사용하세요.',
+  'confirm.acknowledge': '위험을 이해했으며 계속 진행합니다',
+  'confirm.cancel': '취소',
+  'confirm.enable': 'Full access 사용',
 } satisfies Record<PermissionAccessKey, string>

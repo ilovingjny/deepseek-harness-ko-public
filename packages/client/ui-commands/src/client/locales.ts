@@ -24,3 +24,14 @@ export const en = {
   'overlay.aria': '/{command} options',
   'listbox.aria': '/{command} matches',
 } satisfies Record<CommandKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  'search.placeholder': '검색…',
+  'search.aria': '옵션 필터링',
+  'status.loading': '옵션 불러오는 중…',
+  'status.applying': '적용 중…',
+  'status.empty': '옵션 없음',
+  'overlay.aria': '/{command} 옵션',
+  'listbox.aria': '/{command} 일치 항목',
+} satisfies Record<CommandKey, string>

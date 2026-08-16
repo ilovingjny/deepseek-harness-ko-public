@@ -24,3 +24,12 @@ export const en = {
   'loading': 'Loading…',
   'suggestions.aria': 'Trigger suggestions',
 } satisfies Record<MenuKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  'command': '명령',
+  'skill': '스킬',
+  'subagent': '서브에이전트',
+  'loading': '불러오는 중…',
+  'suggestions.aria': '트리거 제안',
+} satisfies Record<MenuKey, string>

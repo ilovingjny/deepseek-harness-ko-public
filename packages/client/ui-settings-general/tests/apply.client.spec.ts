@@ -117,7 +117,7 @@ describe('ui-settings-general apply', () => {
     })
   })
 
-  it('registers the zh/en settings dictionaries and frees the seats on teardown', async () => {
+  it('registers the zh/en/ko settings dictionaries and frees the seats on teardown', async () => {
     const b = await bench()
     declare(b.slots)
     const fiber = b.ctx.plugin({ inject: [...inject], apply })
@@ -125,11 +125,14 @@ describe('ui-settings-general apply', () => {
     expect(b.locale.bind('settings')('title')).toBe('设置')
     b.locale.setLocale('en')
     expect(b.locale.bind('settings')('close')).toBe('Close')
+    b.locale.setLocale('ko')
+    expect(b.locale.bind('settings')('close')).toBe('닫기')
     b.locale.setLocale('zh')
     await fiber.dispose()
     // The (ns, locale) seats are free again — the dictionary disposer ran.
     expect(() => b.locale.register('settings', 'zh', {})).not.toThrow()
     expect(() => b.locale.register('settings', 'en', {})).not.toThrow()
+    expect(() => b.locale.register('settings', 'ko', {})).not.toThrow()
   })
 
   it('the nav label thunk follows the active locale without re-registration', async () => {

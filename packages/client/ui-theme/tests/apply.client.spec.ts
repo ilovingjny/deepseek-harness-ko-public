@@ -93,6 +93,8 @@ describe('ui-theme apply', () => {
     expect(before.locale.bind(SETTINGS_NS)('appearance.title')).toBe('外观')
     before.locale.setLocale('en')
     expect(before.locale.bind(SETTINGS_NS)('appearance.title')).toBe('Appearance')
+    before.locale.setLocale('ko')
+    expect(before.locale.bind(SETTINGS_NS)('appearance.title')).toBe('모양')
     const entry = before.slots.entries(SLOT).find(e => e.component === AppearanceRow)!
     expect(entry.options).toMatchObject({ id: 'appearance', order: 10 })
 

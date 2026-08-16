@@ -197,18 +197,17 @@ export class LocaleRuntime {
    * Register a declared namespace's dictionaries, all locales in one call —
    * the typed form: each dictionary is checked against the namespace's
    * {@link LocaleNamespaceMap} key union (a missing or extra key is a
-   * compile error). zh/en remain the required baseline for existing feature
-   * dictionaries; additional shipped locales may be supplied when a feature
-   * owns a translation. Duplicate (ns, locale) throws (single occupant; a
-   * namespace's texts have one owner). Registration bumps the revision so
-   * mounted outlets pick up late-arriving dictionaries.
+   * compile error). Every shipped locale is required so namespaces stay
+   * balanced across the trilingual UI. Duplicate (ns, locale) throws (single
+   * occupant; a namespace's texts have one owner). Registration bumps the
+   * revision so mounted outlets pick up late-arriving dictionaries.
    * @param ns - a namespace merged into LocaleNamespaceMap.
    * @param dicts - complete dictionaries keyed by locale id.
    * @returns disposer removing every locale registered by this call (idempotent).
    */
   register<N extends keyof LocaleNamespaceMap & string>(
     ns: N,
-    dicts: Record<'zh' | 'en', LocaleDictOf<N>> & Partial<Record<LocaleId, LocaleDictOf<N>>>,
+    dicts: Record<LocaleId, LocaleDictOf<N>>,
   ): () => void
   /**
    * Single-locale untyped form for namespaces outside the merge table

@@ -46,3 +46,25 @@ export const en = {
   failed: 'Mount failed',
   unloading: 'Unloading',
 } satisfies Record<PluginInventoryLocaleKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  tab: '플러그인 목록',
+  loading: '플러그인 읽는 중…',
+  error: '플러그인을 읽을 수 없습니다.',
+  retry: '다시 시도',
+  search: '플러그인 검색',
+  catalog: '플러그인 목록',
+  empty: '사용 가능한 플러그인이 없습니다.',
+  emptySearch: '일치하는 플러그인이 없습니다.',
+  enabledTag: '사용 중',
+  disabledTag: '사용 안 함',
+  configuration: '구성 상태',
+  cordis: 'Cordis 상태',
+  unobserved: '마운트되지 않음',
+  pending: '의존성 대기 중',
+  loadingPhase: '불러오는 중',
+  active: '마운트됨',
+  failed: '마운트 실패',
+  unloading: '언마운트 중',
+} satisfies Record<PluginInventoryLocaleKey, string>

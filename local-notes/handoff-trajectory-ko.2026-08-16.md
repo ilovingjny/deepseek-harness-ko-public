@@ -101,8 +101,11 @@ T1(98f919ef9d) 49개 + T2~T5(598ab48d22, 86f1ec5054, d9e82691ba) 60여 개 + 이
 | 2 | test:web (1228 설치 후 replay) | **없음** | 803s |
 | 3 | navigation-panes 단독 replay | 없음 | 25s |
 | 4 | trajectory-virtualization 단독 replay | 없음 | 9s |
+| 5 | test:web (전체 부하 replay, C1-M1 재실행) | **없음** | 855s (vitest 806.9s) |
 
 minimal-preset.snapshot은 이번 실행에서 샌드박스 백엔드 불가로 실패(dispose 도달 전 코드 실행 단계 실패). dispose hang 자체는 **무재발 → "부하 플레이크 판정 유지"** 로 종결 기록. (에스컬레이션 트리거: 전체 부하 중 afterAll dispose 120s 타임아웃 2회 연속 — 미충족)
+
+- 실행 #5 세부: `DSH_SNAPSHOT=replay pnpm run test:web` (빌드 포함 855s, vitest 806.9s). Test Files 10 failed / 65 passed / 1 skipped — 실패 15건 전부 알려진 환경 한정(sandbox 백엔드 불가 및 그 골든 연쇄, llm-replay fixture 미소진, 부하 계열 Matcher 타임아웃). dispose·afterAll·hook 타임아웃 로그 **0건**.
 
 ## 커밋
 

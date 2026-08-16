@@ -30,6 +30,7 @@ export type TrajectoryKey =
   | 'timeline.clickToLoadEarlierHistory'
   | 'timeline.loadingEarlierHistoryStatus'
   | 'timeline.overviewAria'
+  | 'timeline.aria'
   | 'turn.input'
   | 'turn.output'
   | 'turn.think'
@@ -69,6 +70,9 @@ export type TrajectoryKey =
   | 'table.betweenTurns'
   | 'table.noContent'
   | 'table.noTools'
+  | 'table.ariaCollapsedSummary'
+  | 'table.ariaRequestOnly'
+  | 'table.ariaRow'
   | 'details.eventDetails'
   | 'details.resizeEventDetails'
   | 'details.status'
@@ -177,6 +181,7 @@ export const zh: Record<TrajectoryKey, string> = {
   'timeline.clickToLoadEarlierHistory': 'Click to load earlier history',
   'timeline.loadingEarlierHistoryStatus': 'Loading earlier history',
   'timeline.overviewAria': 'Timeline overview; drag horizontally to focus events',
+  'timeline.aria': 'Trajectory timeline',
   'turn.input': 'Input',
   'turn.output': 'Output',
   'turn.think': 'Think',
@@ -216,6 +221,9 @@ export const zh: Record<TrajectoryKey, string> = {
   'table.betweenTurns': 'Between turns',
   'table.noContent': 'No content',
   'table.noTools': 'No tools in this request',
+  'table.ariaCollapsedSummary': 'Collapsed {kind} summary, {summary}',
+  'table.ariaRequestOnly': 'Request {number}, compaction',
+  'table.ariaRow': '{request}{kind}, {content}',
   'details.eventDetails': 'Event details',
   'details.resizeEventDetails': 'Resize event details',
   'details.status': 'Status',
@@ -318,6 +326,7 @@ export const en: Record<TrajectoryKey, string> = {
   'timeline.clickToLoadEarlierHistory': 'Click to load earlier history',
   'timeline.loadingEarlierHistoryStatus': 'Loading earlier history',
   'timeline.overviewAria': 'Timeline overview; drag horizontally to focus events',
+  'timeline.aria': 'Trajectory timeline',
   'turn.input': 'Input',
   'turn.output': 'Output',
   'turn.think': 'Think',
@@ -357,6 +366,9 @@ export const en: Record<TrajectoryKey, string> = {
   'table.betweenTurns': 'Between turns',
   'table.noContent': 'No content',
   'table.noTools': 'No tools in this request',
+  'table.ariaCollapsedSummary': 'Collapsed {kind} summary, {summary}',
+  'table.ariaRequestOnly': 'Request {number}, compaction',
+  'table.ariaRow': '{request}{kind}, {content}',
   'details.eventDetails': 'Event details',
   'details.resizeEventDetails': 'Resize event details',
   'details.status': 'Status',
@@ -459,6 +471,7 @@ export const ko: Record<TrajectoryKey, string> = {
   'timeline.clickToLoadEarlierHistory': '클릭하여 이전 기록 불러오기',
   'timeline.loadingEarlierHistoryStatus': '이전 기록 불러오는 중',
   'timeline.overviewAria': '타임라인 개요; 이벤트에 초점을 맞추려면 가로로 드래그',
+  'timeline.aria': '실행 경로 타임라인',
   'turn.input': '입력',
   'turn.output': '출력',
   'turn.think': '추론',
@@ -498,6 +511,9 @@ export const ko: Record<TrajectoryKey, string> = {
   'table.betweenTurns': '턴 사이',
   'table.noContent': '내용 없음',
   'table.noTools': '이 요청에 도구가 없습니다',
+  'table.ariaCollapsedSummary': '접힌 {kind} 요약, {summary}',
+  'table.ariaRequestOnly': '요청 {number}, 컨텍스트 압축',
+  'table.ariaRow': '{request}{kind}, {content}',
   'details.eventDetails': '이벤트 상세',
   'details.resizeEventDetails': '이벤트 상세 크기 조정',
   'details.status': '상태',

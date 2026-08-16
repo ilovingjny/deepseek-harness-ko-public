@@ -2444,10 +2444,14 @@ export function TrajectoryTable({
                       tabIndex={isRequestOnly ? -1 : 0}
                       aria-rowindex={position + 1 + historyRowOffset}
                       aria-label={isCollapsedSummary
-                        ? `Collapsed ${record.collapsedSummaryKind} summary, ${record.collapsedSummary}`
+                        ? t('table.ariaCollapsedSummary', { kind: record.collapsedSummaryKind, summary: record.collapsedSummary })
                         : isRequestOnly
-                          ? `Request ${request ?? ''}, compaction`
-                          : `${request === undefined ? '' : `Request ${request}, `}${KIND_LABEL[record.cell.kind]}, ${listDisplayText || 'no content'}`}
+                          ? t('table.ariaRequestOnly', { number: request ?? '' })
+                          : t('table.ariaRow', {
+                            request: request === undefined ? '' : `${t('table.request', { number: request })}, `,
+                            kind: KIND_LABEL[record.cell.kind],
+                            content: listDisplayText || t('table.noContent'),
+                          })}
                       aria-selected={!isCollapsedSummary && !isRequestOnly && selectedIndex === record.cell.index}
                       data-kind={record.cell.kind}
                       data-trajectory-row-key={trajectoryVirtualRecordKey(record)}
@@ -2622,7 +2626,7 @@ export function TrajectoryTable({
                                 className={resultText === undefined ? css.contentText : css.resultPreview}
                                 title={resultText === undefined
                                   ? listDisplayText
-                                  : `${listDisplayText} → ${resultText}`}
+                                  : `${listDisplayText} → ${resultText === 'No output' ? t('details.noOutput') : resultText}`}
                               >
                                 <span className={resultText === undefined ? undefined : css.resultRequest}>
                                   <RecordListText

@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { TrajectoryTable } from '../src/client/TrajectoryTable.tsx'
 import type { TrajectoryTurnModel } from '../src/client/layout.ts'
-import { en, type NS } from '../src/client/locales.ts'
+import { en, ko, type NS } from '../src/client/locales.ts'
 import type { TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
 
 afterEach(() => {
@@ -99,6 +99,49 @@ describe('TrajectoryTable', () => {
     render(<TrajectoryTable turns={turns} {...FOLD_PROPS} />)
 
     expect(screen.getByText('(tool call only)')).toBeTruthy()
+  })
+
+  it('renders Korean UI labels while keeping data-layer text in English', () => {
+    const koT: TranslateNS<typeof NS> = (key, params) => {
+      const dictionary = ko as Record<string, string>
+      let text = dictionary[key] ?? key
+      if (params !== undefined) {
+        for (const [name, value] of Object.entries(params)) {
+          text = text.replaceAll(`{${name}}`, String(value))
+        }
+      }
+      return text
+    }
+    const turns: readonly TrajectoryTurnModel[] = [{
+      turn: 1,
+      groups: [{
+        title: 'Step 1',
+        cells: [
+          {
+            index: 1,
+            kind: 'message',
+            text: 'Tool call only',
+            sourceBlocks: [{
+              type: 'tool-call', content: '{}', callId: 'call-1', toolName: 'read',
+            }],
+            timeSeconds: 1,
+          },
+          {
+            index: 2,
+            kind: 'message',
+            text: 'plain english message',
+            timeSeconds: 1,
+          },
+        ],
+      }],
+    }]
+
+    render(<TrajectoryTable turns={turns} {...FOLD_PROPS} t={koT} />)
+
+    // UI 문구는 한국어 사전을 통해 번역된다 (데이터 계층 센티널 'Tool call only'의 렌더 매핑).
+    expect(screen.getByText('(도구 호출만)')).toBeTruthy()
+    // 데이터 유래 텍스트는 번역되지 않고 영어 그대로 유지된다.
+    expect(screen.getByText('plain english message')).toBeTruthy()
   })
 
   it('shows assistant timing facts after keyboard selection', () => {

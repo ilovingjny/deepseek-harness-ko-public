@@ -139,6 +139,7 @@ export type TrajectoryKey =
   | 'layout.systemPromptUpdated'
   | 'layout.toolsUpdated'
   | 'layout.systemPromptAndToolsUpdated'
+  | 'layout.compactingContext'
   | 'layout.compactionFailed'
   | 'layout.contextCompacted'
 
@@ -285,6 +286,7 @@ export const zh: Record<TrajectoryKey, string> = {
   'layout.systemPromptUpdated': 'System Prompt Updated',
   'layout.toolsUpdated': 'Tools Updated',
   'layout.systemPromptAndToolsUpdated': 'System Prompt and Tools Updated',
+  'layout.compactingContext': 'Compacting context…',
   'layout.compactionFailed': 'Compaction failed',
   'layout.contextCompacted': 'Context compacted',
 }
@@ -425,6 +427,7 @@ export const en: Record<TrajectoryKey, string> = {
   'layout.systemPromptUpdated': 'System Prompt Updated',
   'layout.toolsUpdated': 'Tools Updated',
   'layout.systemPromptAndToolsUpdated': 'System Prompt and Tools Updated',
+  'layout.compactingContext': 'Compacting context…',
   'layout.compactionFailed': 'Compaction failed',
   'layout.contextCompacted': 'Context compacted',
 }
@@ -565,6 +568,7 @@ export const ko: Record<TrajectoryKey, string> = {
   'layout.systemPromptUpdated': '시스템 프롬프트 업데이트됨',
   'layout.toolsUpdated': '도구 업데이트됨',
   'layout.systemPromptAndToolsUpdated': '시스템 프롬프트 및 도구 업데이트됨',
+  'layout.compactingContext': '컨텍스트 압축 중…',
   'layout.compactionFailed': '컨텍스트 압축 실패',
   'layout.contextCompacted': '컨텍스트가 압축되었습니다',
 }

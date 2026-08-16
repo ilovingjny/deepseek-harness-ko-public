@@ -992,6 +992,25 @@ function detailTabs(t: TranslateNS<typeof NS>, record: TableRecord): readonly De
   ]
 }
 
+function compactionChangeLabel(t: TranslateNS<typeof NS>, text: string): string {
+  switch (text) {
+    case 'Compacting context…': return t('layout.compactingContext')
+    case 'Compaction failed': return t('layout.compactionFailed')
+    case 'Context compacted': return t('layout.contextCompacted')
+    default: return text
+  }
+}
+
+function systemChangeLabel(t: TranslateNS<typeof NS>, text: string): string {
+  switch (text) {
+    case 'Initial System Prompt': return t('layout.initialSystemPrompt')
+    case 'System Prompt Updated': return t('layout.systemPromptUpdated')
+    case 'Tools Updated': return t('layout.toolsUpdated')
+    case 'System Prompt and Tools Updated': return t('layout.systemPromptAndToolsUpdated')
+    default: return text
+  }
+}
+
 function recordDisplayText(cell: TrajectoryCellProps): string {
   if (isToolCallOnly(cell)) return ''
   if (cell.previewMarkdown !== undefined) {
@@ -1052,9 +1071,13 @@ function RecordPresentation({
   children: (value: RecordPresentationValue) => ReactNode
 }) {
   const displayText = useMemo(
-    () => recordDisplayText(cell),
+    () => cell.kind === 'system'
+      ? systemChangeLabel(t, cell.text)
+      : cell.kind === 'compacted'
+        ? compactionChangeLabel(t, cell.text)
+        : recordDisplayText(cell),
     [
-      cell.kind, cell.text, cell.previewMarkdown,
+      t, cell.kind, cell.text, cell.previewMarkdown,
       cell.inputDetail, cell.outputDetail, cell.thinkingDetail,
     ],
   )
@@ -2745,7 +2768,9 @@ export function TrajectoryTable({
                   ? (
                     <>
                       <span className={`${css.kindTag} ${css.systemNeutral}`}>SYSTEM</span>
-                      <span className={css.detailsLocation}>{selected?.cell.text}</span>
+                      <span className={css.detailsLocation}>
+                        {systemChangeLabel(t, selected?.cell.text ?? '')}
+                      </span>
                     </>
                   )
                   : selected !== undefined && (

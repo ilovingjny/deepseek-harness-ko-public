@@ -10,6 +10,8 @@ export const zh = {
   'row.stopped': 'skill 加载已中止',
   'row.instructions': '说明',
   'menu.userOnly': '仅用户',
+  'row.title': 'Skill',
+  'action.inspect': '检查',
 } satisfies Record<string, string>
 
 /** The skill namespace key union. */
@@ -22,6 +24,8 @@ export const en = {
   'row.stopped': 'Skill load stopped',
   'row.instructions': 'Instructions',
   'menu.userOnly': 'user-only',
+  'row.title': 'Skill',
+  'action.inspect': 'Inspect',
 } satisfies Record<SkillKey, string>
 
 /** Korean dictionary. */
@@ -31,4 +35,6 @@ export const ko = {
   'row.stopped': '스킬 불러오기 중단됨',
   'row.instructions': '사용법',
   'menu.userOnly': '사용자 전용',
+  'row.title': '스킬',
+  'action.inspect': '상세 보기',
 } satisfies Record<SkillKey, string>

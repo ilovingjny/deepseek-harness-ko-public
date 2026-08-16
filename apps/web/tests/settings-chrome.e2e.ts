@@ -19,7 +19,7 @@ import {
   acknowledgeReloadConnectionLoss, assertFixtureInventory, captureStableAria, compareOrRefreshGolden,
   launchWebScaffold, watchConsole, webSnapshotMode, type WebScaffold,
 } from './scaffold.ts'
-import { ZH_BROWSER_LOCALE, saveFailureShot } from './support.ts'
+import { KO_BROWSER_LOCALE, ZH_BROWSER_LOCALE, saveFailureShot } from './support.ts'
 
 const SNAPSHOT_DIR = fileURLToPath(new URL('./snapshots/settings-chrome', import.meta.url))
 const DIALOG_EXPECTED = join(SNAPSHOT_DIR, 'dialog.expected.md')
@@ -474,6 +474,37 @@ describe('web e2e: settings modal and General preferences', () => {
       expect(enTripwire.warnings).toEqual([])
     } finally {
       await enPage.close()
+      await fresh.close()
+    }
+  }, 90_000)
+
+  it('opens a fresh Korean browser in Korean and exposes every language choice', async () => {
+    const fresh = await launchWebScaffold({})
+    const koPage = await browser.newPage({ viewport: { width: 1680, height: 1000 }, locale: KO_BROWSER_LOCALE })
+    const koTripwire = watchConsole(koPage)
+    onTestFailed(() => saveFailureShot(koPage, 'web-e2e-settings-browser-korean'))
+    try {
+      await koPage.goto(fresh.baseUrl, { waitUntil: 'load' })
+      await koPage.waitForSelector('[class*="frame"]', { timeout: 30_000 })
+      expect(await koPage.evaluate(() => localStorage.getItem('dsh.locale'))).toBeNull()
+
+      await koPage.getByRole('button', { name: '설정', exact: true }).click()
+      const dialog = koPage.getByRole('dialog', { name: '설정' })
+      await dialog.waitFor({ timeout: 10_000 })
+      const selector = dialog.getByRole('button', { name: '한국어', exact: true })
+      await selector.waitFor({ timeout: 10_000 })
+      await selector.click()
+
+      for (const label of ['한국어', 'English', '中文']) {
+        await koPage.getByRole('menuitem', { name: label, exact: true }).waitFor({ timeout: 5_000 })
+      }
+      expect(await koPage.getByRole('menuitem', { name: '한국어', exact: true }).count()).toBe(1)
+      expect(await koPage.getByRole('menuitem', { name: 'English', exact: true }).count()).toBe(1)
+      expect(await koPage.getByRole('menuitem', { name: '中文', exact: true }).count()).toBe(1)
+      expect(koTripwire.pageErrors).toEqual([])
+      expect(koTripwire.warnings).toEqual([])
+    } finally {
+      await koPage.close()
       await fresh.close()
     }
   }, 90_000)

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -eu
+
+DSH_KO_REPO=${DSH_KO_REPO:-/Users/yulsol/Documents/mac maintanance/deepseek-harness-ko}
+DSH_HOME=${DSH_KO_HOME:-/Users/yulsol/.dsh-ko}
+export DSH_HOME
+
+if [ "$#" -eq 0 ]; then
+  set -- web
+fi
+
+exec pnpm --dir "$DSH_KO_REPO" dsh "$@"

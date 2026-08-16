@@ -2,6 +2,10 @@
 
 English | [中文](README.zh.md)
 
+> [!IMPORTANT]
+>
+> This private downstream adds a Korean browser UI and an isolated `dsh-ko` launcher while preserving the official `dsh` installation. See the [Korean fork guide](PRIVATE_FORK_KO.md) for installation, verification, maintenance, and known limitations.
+
 DeepSeek Harness (`dsh`) is an open-source agent harness developed by [DeepSeek AI](https://deepseek.com).
 
 It uses an architecture where **everything is a plugin**, and is powered by [Cordis](https://github.com/cordiverse/cordis), whose design is described in [_A Programming Paradigm for Spatiotemporal Composability_](https://github.com/cordiverse/paper).

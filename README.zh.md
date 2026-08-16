@@ -2,6 +2,10 @@
 
 [English](README.md) | 中文
 
+> [!IMPORTANT]
+>
+> 此私有下游版本增加了韩文浏览器界面与隔离的 `dsh-ko` 启动器，同时保留官方 `dsh` 安装。安装、验证、维护方式与已知限制见[韩文分支指南](PRIVATE_FORK_KO.md)。
+
 DeepSeek Harness（`dsh`）是由 [DeepSeek AI](https://deepseek.com) 开发的开源 agent harness（智能体框架）。
 
 它采用**一切皆插件**的架构，并由 [Cordis](https://github.com/cordiverse/cordis) 驱动，其设计参见论文 [_A Programming Paradigm for Spatiotemporal Composability_](https://github.com/cordiverse/paper)。

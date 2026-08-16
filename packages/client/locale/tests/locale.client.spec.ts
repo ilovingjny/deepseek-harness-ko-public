@@ -4,6 +4,7 @@ import { Context } from '@deepseek-ai/cordis'
 import { stubSettingsScope, type StubSettingsScope } from '@deepseek-ai/dsh-client-test-runtime'
 import type { LocaleSettings, LocaleSnapshot } from '@deepseek-ai/dsh-client-locale/client'
 import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
+import { LOCALE_IDS } from '../src/locale-settings.ts'
 
 const make = (host?: StubSettingsScope<LocaleSettings>): {
   ctx: Context
@@ -210,6 +211,8 @@ describe('LocaleRuntime', () => {
     // the product default rather than an arbitrary near-match.
     stubLanguages('fr-FR', 'de')
     expect(make().svc.getLocale().active).toBe('zh')
+    stubLanguages('ko-KR')
+    expect(make().svc.getLocale().active).toBe('ko')
   })
 
   it('runs outside a browser (node boots): the fallback decides and the machine language does not', () => {
@@ -230,11 +233,23 @@ describe('LocaleRuntime', () => {
     expect(svc.getLocale().active).toBe('zh')
   })
 
-  it('exposes the two shipped locales with self-described labels', () => {
+  it('exposes the three shipped locales with self-described labels', () => {
     const { svc } = make()
     expect(svc.getLocale().locales).toEqual([
       { id: 'zh', label: '中文' },
       { id: 'en', label: 'English' },
+      { id: 'ko', label: '한국어' },
     ])
+  })
+
+  it('ships locale identifiers in the required order', () => {
+    expect(LOCALE_IDS).toEqual(['zh', 'en', 'ko'])
+  })
+
+  it('persists Korean as the Host preference', () => {
+    const host = stubSettingsScope<LocaleSettings>()
+    const { svc } = make(host)
+    svc.setLocale('ko')
+    expect(host.set).toHaveBeenCalledWith('preference', 'ko')
   })
 })

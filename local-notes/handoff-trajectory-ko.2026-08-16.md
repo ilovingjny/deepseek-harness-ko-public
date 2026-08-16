@@ -112,7 +112,7 @@ minimal-preset.snapshot은 이번 실행에서 샌드박스 백엔드 불가로 
 
 ## 남은 일 / 알려진 문제
 
-1. **pro 모델 workflow 자식 null 실패 진단** — 별도 카드 t_3d766703 (deepflash-coder, 이 카드 완료 시 승격).
+1. **pro 모델 workflow 자식 null 실패 — 트랙 B 완결** (진단: `local-notes/pro-workflow-diagnosis.ko.md` 최종판, D4 커밋) — 현재 환경에서 재현 불가(3종 대조군 성공, D4 재실행에서 pro+workflow 재확인). 원인은 자격증명 계층으로 가설 수렴: Mac의 dsh-ko 프로필에 `OPENCODE_GO_API_KEY` 부재 시 `MISSING_CREDENTIAL` → 자식 null. known-issue + workaround(키 설정 / workflow 스크립트에서 `model: 'deepseek-v4-pro'` 명시) 문서화 완료. settings.ko.yaml 수정 없음, flash 기본 유지.
 2. **이 서버 환경 한정 실패 2종** — test:gui shiki lazy 로드 타임아웃(code-block, 5s 고정 타임아웃이 4코어 부하에서 초과) / test:web 샌드박스 불가(bwrap userns 거부·Landlock 없음)·부하. 맥북/샌드박스 가능 호스트에서는 기준(3761/254) 충족 예상. 해결 후보: code-block 테스트 타임아웃 상향(별도 카드), 샌드박스 호스트에서 CI 실행.
 3. **W7 known-issue**: 검색 인덱스는 데이터 계층(영어 원문)만 검색 — 번역 UI 라벨로 검색 불가(의도된 범위).
 4. **W5 보류**: 센티널 문자열 switch → 태그 기반 전환은 별도 카드(데이터 모델 변경 수반).

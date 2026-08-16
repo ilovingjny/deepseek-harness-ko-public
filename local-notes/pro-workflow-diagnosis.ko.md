@@ -1,10 +1,10 @@
-# pro 모델 workflow 자식 null 실패 진단 (B1-D1~D3)
+# pro 모델 workflow 자식 null 실패 진단 — 최종판 (B1-D1~D3 + B2-D4)
 
-- **카드:** t_3d766703 (deepflash-coder) — 진단 전용, 코드 수정 없음
-- **일시:** 2026-08-16 22:00~22:20 KST
+- **카드:** t_3d766703 (B1-D1~D3, deepflash-coder) + t_4bf0f89c (B2-D4, default) — 진단·조치 전용, 코드 수정 없음
+- **일시:** 2026-08-16 22:00~22:20 KST (D1~D3) / 22:30~ (D4 재실행·종결 확인)
 - **환경:** Linux 서버 (이전 실패 기록은 macOS 핸드오프 기준)
-- **브랜치:** local/korean-ui (커밋 facaa6bfb1 위)
-- **관련 문서:** `local-notes/plan-2026-08-16-trajectory-ko.md` 트랙 B, `local-notes/handoff-2026-08-16.ko.md` §남은 일 3
+- **브랜치:** local/korean-ui (D1~D3 커밋 ab5f5bdd7c 위, D4 커밋 별도)
+- **관련 문서:** `local-notes/plan-2026-08-16-trajectory-ko.md` 트랙 B, `local-notes/handoff-2026-08-16.ko.md` §남은 일 3, `local-notes/handoff-trajectory-ko.2026-08-16.md` §트랙 B 링크
 
 ---
 
@@ -16,8 +16,9 @@
 | D2 식별자 대조 | `deepseek-official` = llm-deepseek가 등록하는 **정식 provider 라우트**. 구성 불일치 아님. `deepseek-v4-pro` 탈락 경로 없음 |
 | D3 요청 계층 | zen/go 엔드포인트는 pro + `thinking enabled` + `reasoning_effort max` + `max_tokens 256000`을 **정상 수락** (HTTP 200 SSE) |
 | 원인 가설 | **자격증명 계층**: 원래 실패(Mac)는 `OPENCODE_GO_API_KEY` 자격증명 부재 → `MISSING_CREDENTIAL` → workflow 자식 첫 요청 실패 → runtime null 반환으로 수렴 (근거: §4) |
+| D4 종결 | **재현 케이스 종결 + known-issue 문서화 완료** — D4에서 대조군 ③(workflow+pro 명시) 재실행 성공(자식 request/header에 `deepseek-v4-pro` 확인), settings.ko.yaml은 수정 불필요(정상 구성), 런타임 `~/.dsh-ko/settings.yaml`이 재현 중 pro로 변경돼 있던 것을 소스와 정합(flash 복원). Mac 자격증명 부재는 known-issue로 기록 (§5.5) |
 
-성공 기준("null 실패의 원인 계층 확정 또는 가설 수렴 + 근거 코드 경로 기록")은 **가설 수렴 + 근거 기록**으로 충족.
+성공 기준("null 실패의 원인 계층 확정 또는 가설 수렴 + 근거 코드 경로 기록")은 **가설 수렴 + 근거 기록**으로 충족. D4 성공 기준("재현 케이스 종결 또는 known-issue 문서화 완료")은 **둘 다 충족**. flash 기본 모델은 settings.ko.yaml 기준 변경 없음(금지사항 준수).
 
 ---
 
@@ -211,23 +212,53 @@ llm-deepseek resolveApiKey (index.ts:225-246)
 
 ---
 
-## 5. 결론 및 후속 (D4로 이월)
+## 5. 결론 및 후속 (D4 완료)
+
+### 5.1 결론 (D1~D3)
 
 1. **현재 구성(OPENCODE_GO_API_KEY 로드)에서는 null 실패가 재현되지 않는다.** 3종 대조군 모두 성공. workflow 자식에 pro를 쓰려면 스크립트에서 `model: 'deepseek-v4-pro'` 명시가 필요하고(§2.5), 명시 시 정상 성공한다(③).
 2. **코드·엔드포인트 실증 결과, 프로바이더 라우트/모델 식별자/요청 파라미터 어디에도 거부 지점이 없다.**
 3. **가장 유력한 원인은 자격증명**: 원래 실패 환경(Mac)이 공식 `~/.dsh` 키를 복사해 `OPENCODE_GO_API_KEY`가 없었을 때 `MISSING_CREDENTIAL` → workflow 자식 null.
-4. **D4 권장 조치 (별도 카드 t_4bf0f89c)**:
-   - Mac에서 `~/.dsh-ko/.credentials.yaml`에 `OPENCODE_GO_API_KEY` 존재 확인 (키 값 노출 금지, ref 존재만)
-   - 존재하지 않으면 `settings.ko.yaml`과 동일한 키 ref를 저장하거나 환경변수 export로 통일
-   - 재확인 후에도 실패 시 일시적 업스트림 오류 가설로 (그때는 요청 시각 로그 확보 필요)
-   - workaround(긴급 필요 시): workflow 자식은 `model: 'deepseek-v4-flash'` 명시 또는 기본값 유지
+
+### 5.2 D4 재실행 기록 (2026-08-16 22:30~, 종결 확인)
+
+| 항목 | 내용 |
+|---|---|
+| 실행 환경 | `DSH_HOME=/home/yulsol/.dsh-ko ~/.local/bin/dsh-ko web --port 3081` + `OPENCODE_GO_API_KEY` (env 로드) |
+| 검증 게이트 | dsh-ko 기동 + 웹 HTTP 200 확인 ✅ |
+| 재현 케이스 ③ | `agent("Reply with exactly: PING-OK", { model: "deepseek-v4-pro" })` — **성공** |
+| 자식 세션 | `c2dd6e33-7726-4a40-9223-f41694184dad` — request/header `{"provider": "deepseek-official", "model": "deepseek-v4-pro", "maxTokens": 256000, "reasoningEffort": "max"}` |
+| 이벤트 | `tool-workflow/run-start` → `agent-start` → `agent-end outcome=completed` → `run-end stopReason=completed` → `tool/result` "Return value: {\"childResult\": \"PING-OK\"}" |
+| 판정 | **null 실패 재현 불가 — 재현 케이스 종결.** 원인 계층(자격증명) 가설 유지 |
+
+### 5.3 D4 구성 정합 (settings.ko.yaml vs 런타임)
+
+- `local-tools/settings.ko.yaml`은 **수정 불필요** — `llm-deepseek.apiKeyEnv: OPENCODE_GO_API_KEY` + `agent-default-model.provider: deepseek-official` 정합(§2.1), flash 기본 유지.
+- 다만 D1~D3 재현 과정에서 `~/.dsh-ko/settings.yaml`(런타임)의 `agent-default-model.model`이 `deepseek-v4-pro`로 변경돼 있던 것을 발견. **소스(settings.ko.yaml)와 동일하게 `deepseek-v4-flash`로 복원** 후 재실행. (yaml은 typecheck 대상 아님 — 검증 게이트는 dsh-ko 기동 + 웹 200으로 수행)
+
+### 5.4 known-issue (Mac 자격증명 부재)
+
+- **현상:** dsh-ko에서 workflow 툴로 `deepseek-v4-pro` 단일 에이전트를 호출 시 자식 실패(null)로 종료 (Mac 핸드오프 기록).
+- **원인:** `~/.dsh-ko/.credentials.yaml`(또는 환경변수)에 `OPENCODE_GO_API_KEY`가 없으면 `MISSING_CREDENTIAL` → 자식 첫 요청 실패 → workflow runtime이 null 반환 (코드 경로 §4.1). settings.ko.yaml이 요구하는 키가 자격증명 계층에 존재해야 함.
+- **workaround:**
+  1. dsh-ko 프로필(`~/.dsh-ko/.credentials.yaml` 또는 환경변수)에 `OPENCODE_GO_API_KEY` 설정 — 키 ref만 존재 확인, 값 노출 금지.
+  2. workflow 자식에 pro를 쓰려면 스크립트에서 `model: 'deepseek-v4-pro'` **명시 필수** (세션 selectModel은 자식에 미상속, §2.5).
+  3. 긴급 시: workflow 자식은 기본값(flash) 또는 `model: 'deepseek-v4-flash'` 명시로 유지.
+
+### 5.5 D4 성공 기준 판정
+
+- 재현 케이스 종결: ✅ (5.2, pro+workflow 성공)
+- known-issue 문서화: ✅ (5.4)
+- flash 기본 모델 변경: 없음 (settings.ko.yaml 불변, 런타임은 소스와 정합 복원)
+- 공식 dsh 환경(`~/.dsh`): 무접촉 유지
 
 ---
 
 ## 6. 금지사항 준수 확인
 
 - API 키 값 출력·커밋: 없음 (probe는 환경변수만 사용, 출력에서 키 문자열 제거)
-- settings.ko.yaml 값 변경: 없음 (읽기만)
+- settings.ko.yaml 값 변경: 없음 (읽기만, D4에서도 수정 없음 — 런타임 ~/.dsh-ko/settings.yaml만 소스와 정합 복원)
 - 공식 dsh 환경(`~/.dsh`): 무접촉 (존재 자체도 확인하지 않음)
 - 자격증명 파일 내용 문서화: 없음 (파일 존재/부재만 확인)
-- 코드 수정: 없음 (진단 전용, 문서만)
+- 코드 수정: 없음 (진단·조치 전용, 문서만)
+- flash 기본 모델 변경: 없음 (settings.ko.yaml `agent-default-model.model: deepseek-v4-flash` 유지)

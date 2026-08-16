@@ -23,3 +23,12 @@ export const en = {
   'row.instructions': 'Instructions',
   'menu.userOnly': 'user-only',
 } satisfies Record<SkillKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  'row.running': '스킬 불러오는 중',
+  'row.failed': '스킬 불러오기 실패',
+  'row.stopped': '스킬 불러오기 중단됨',
+  'row.instructions': '사용법',
+  'menu.userOnly': '사용자 전용',
+} satisfies Record<SkillKey, string>

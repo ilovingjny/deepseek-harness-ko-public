@@ -36,3 +36,20 @@ export const en = {
   'plan.decline': 'Refuse',
   'plan.discuss': 'Chat about it',
 } satisfies Record<QuestionKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  'error.incomplete': '먼저 이 질문에 답해 주세요.',
+  'error.unanswered': '옵션을 선택하거나 직접 답을 입력해 주세요.',
+  'nav.prev': '이전 질문',
+  'nav.next': '다음 질문',
+  'nav.cancel': '모든 질문 닫기',
+  'option.recommended': '추천',
+  'custom.placeholder': '답을 입력하세요',
+  'action.skip': '이 질문 건너뛰기',
+  'action.next': '다음',
+  'plan.header': '계획 검토',
+  'plan.approve': '승인',
+  'plan.decline': '거부',
+  'plan.discuss': '채팅에서 논의',
+} satisfies Record<QuestionKey, string>

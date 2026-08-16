@@ -47,5 +47,27 @@ export const en: Record<WorkflowRunKey, string> = {
   'status.interrupted': 'Interrupted',
 }
 
+/** Korean dictionary. */
+export const ko = {
+  'run.title': '{name}',
+  'run.members.one': '멤버 {count}명',
+  'run.members.other': '멤버 {count}명',
+  'run.empty': '시작된 멤버 없음',
+  'phase.unassigned': '단계 없음',
+  'phase.empty': '빈 단계 이름',
+  'statusCount.running': '실행 중 {count}',
+  'statusCount.completed': '완료됨 {count}',
+  'statusCount.failed': '실패 {count}',
+  'statusCount.cancelled': '취소됨 {count}',
+  'statusCount.interrupted': '중단됨 {count}',
+  'member.empty': '빈 멤버 이름',
+  'member.open': '{name} 열기',
+  'status.running': '실행 중',
+  'status.completed': '완료됨',
+  'status.failed': '실패',
+  'status.cancelled': '취소됨',
+  'status.interrupted': '중단됨',
+} satisfies Record<WorkflowRunKey, string>
+
 /** Union of this namespace's dictionary keys. */
 export type WorkflowRunKey = keyof typeof zh

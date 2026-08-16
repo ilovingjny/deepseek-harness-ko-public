@@ -41,5 +41,24 @@ export const en: Record<JobKey, string> = {
   'duration.title.done': 'Took {duration}',
 }
 
+/** Korean dictionary. */
+export const ko = {
+  'count.live.one': '백그라운드 작업 {count}개 실행 중',
+  'count.live.other': '백그라운드 작업 {count}개 실행 중',
+  'count.idle.one': '백그라운드 작업 {count}개',
+  'count.idle.other': '백그라운드 작업 {count}개',
+  'list.aria': '백그라운드 작업',
+  'status.running': '실행 중',
+  'status.stopping': '중지 중',
+  'status.completed': '완료됨',
+  'status.killed': '강제 종료됨',
+  'status.failed': '실패함',
+  'duration.seconds': '{seconds}초',
+  'duration.minutes': '{minutes}분 {seconds}초',
+  'duration.hours': '{hours}시간 {minutes}분',
+  'duration.title.live': '{duration} 동안 실행됨',
+  'duration.title.done': '{duration} 소요',
+} satisfies Record<JobKey, string>
+
 /** Key domain of the `job` namespace (zh is the source of truth). */
 export type JobKey = keyof typeof zh

@@ -41,3 +41,19 @@ export const en = {
   'error.load': 'Could not load feedback',
   'error.generic': 'Could not save feedback',
 } satisfies Record<MessageFeedbackKey, string>
+
+/** Korean dictionary. */
+export const ko = {
+  'action.like': '좋은 답변',
+  'action.likeActive': '평가 취소',
+  'action.dislike': '문제 있는 답변',
+  'action.dislikeActive': '평가 취소',
+  'note.open': '메모 추가',
+  'note.placeholder': '무엇이 좋았거나 문제가 있었나요? (선택 사항)',
+  'note.save': '저장',
+  'note.cancel': '취소',
+  'note.aria': '피드백 메모',
+  'error.conflict': '이 피드백이 다른 곳에서 변경되었습니다. 최신 상태를 표시합니다.',
+  'error.load': '피드백을 불러오지 못했습니다',
+  'error.generic': '피드백을 저장하지 못했습니다',
+} satisfies Record<MessageFeedbackKey, string>

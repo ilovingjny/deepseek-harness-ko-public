@@ -77,5 +77,42 @@ export const en: Record<SubagentKey, string> = {
   'readonly.body': 'The parent session is offline; reopen it to continue sending messages.',
 }
 
+/** Korean dictionary. */
+export const ko = {
+  'diagnostic.corrupt': '손상된 세션 기록',
+  'diagnostic.unsupported': '지원되지 않는 서브에이전트 기록 버전',
+  'diagnostic.unavailable': '세션 기록을 일시적으로 사용할 수 없음',
+  'duration.seconds': '{seconds}초',
+  'duration.minutes': '{minutes}분 {seconds}초',
+  'duration.hours': '{hours}시간 {minutes}분 {seconds}초',
+  'duration.days': '{days}일',
+  'duration.daysHours': '{days}일 {hours}시간',
+  'duration.months': '약 {months}개월',
+  'duration.monthsDays': '약 {months}개월 {days}일',
+  'duration.years': '약 {years}년',
+  'duration.yearsMonths': '약 {years}년 {months}개월',
+  'duration.exactDays': '{days}일 {hours}시간 {minutes}분 {seconds}초',
+  'duration.exactTitle': '총 활성 시간: {duration}',
+  'loading.label': '서브에이전트 불러오는 중…',
+  'loading.aria': '서브에이전트 불러오는 중',
+  'load.error': '서브에이전트를 불러올 수 없음',
+  'retry': '다시 시도',
+  'mode.oneShot': '일회성',
+  'mode.continuable': '계속 가능',
+  'activity.running': '실행 중',
+  'activity.inactive': '실행 중이 아님',
+  'branch.collapse': '{label} 하위 서브에이전트 접기',
+  'branch.expand': '{label} 하위 서브에이전트 펼치기',
+  'count.total.one': '서브에이전트 {count}개',
+  'count.total.other': '서브에이전트 {count}개',
+  'count.running.one': '서브에이전트 {count}개 실행 중',
+  'count.running.other': '서브에이전트 {count}개 실행 중',
+  'tree.aria': '서브에이전트 세션',
+  'readonly.oneShot.title': '일회성 서브에이전트 기록',
+  'readonly.title': '이 서브에이전트는 현재 읽기 전용',
+  'readonly.oneShot.body': '일회성 작업에는 후속 메시지를 보낼 수 없습니다. 여기서 전체 실행 기록을 확인하세요.',
+  'readonly.body': '부모 세션이 오프라인입니다. 다시 열면 메시지를 계속 보낼 수 있습니다.',
+} satisfies Record<SubagentKey, string>
+
 /** Key domain of the `subagent` namespace (zh is the source of truth). */
 export type SubagentKey = keyof typeof zh

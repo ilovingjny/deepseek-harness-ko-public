@@ -62,3 +62,21 @@ export const en: Record<TrajectoryKey, string> = {
   'toolbar.search': 'Search trajectory',
   'toolbar.searchPlaceholder': 'Search',
 }
+
+/** Korean dictionary. */
+export const ko: Record<TrajectoryKey, string> = {
+  'view.trajectory': '실행 경로',
+  'toolbar.aria': '실행 경로 도구 모음',
+  'toolbar.duration': '소요 시간',
+  'toolbar.useActualDuration': '실제 소요 시간 사용',
+  'toolbar.useEqualWidth': '작업을 같은 너비로 표시',
+  'toolbar.actualTime': '실제 시간',
+  'toolbar.turns': '턴',
+  'toolbar.expandTurns': '턴 펼치기',
+  'toolbar.collapseTurns': '턴 접기',
+  'toolbar.calls': '호출',
+  'toolbar.expandCalls': '호출 펼치기',
+  'toolbar.collapseCalls': '호출 접기',
+  'toolbar.search': '실행 경로 검색',
+  'toolbar.searchPlaceholder': '검색',
+}

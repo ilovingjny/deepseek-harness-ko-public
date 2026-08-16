@@ -21,5 +21,14 @@ export const en: Record<DeliverablesKey, string> = {
   'produced.showInFolder': 'Show in folder',
 }
 
+/** Korean dictionary. */
+export const ko = {
+  'produced.label': '생성된 파일',
+  'produced.moreOne': '+ 파일 1개',
+  'produced.more': '+ 파일 {count}개',
+  'produced.open': '{name} 열기',
+  'produced.showInFolder': '폴더에서 보기',
+} satisfies Record<DeliverablesKey, string>
+
 /** Union of this namespace's dictionary keys. */
 export type DeliverablesKey = keyof typeof zh

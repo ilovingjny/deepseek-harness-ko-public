@@ -11,15 +11,28 @@ import type {
 import { TrajectoryGroupHeader } from '../src/client/TrajectoryGroupHeader.tsx'
 import { TrajectoryTurn } from '../src/client/TrajectoryTurn.tsx'
 import { TrajectoryTurnHeader } from '../src/client/TrajectoryTurnHeader.tsx'
+import { en, type NS } from '../src/client/locales.ts'
+import type { TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
 import {
   appendTrajectoryPartialLayout, deriveTrajectoryLayout,
 } from '../src/client/layout.ts'
 
 afterEach(cleanup)
 
+const t: TranslateNS<typeof NS> = (key, params) => {
+  const dictionary = en as Record<string, string>
+  let text = dictionary[key] ?? key
+  if (params !== undefined) {
+    for (const [name, value] of Object.entries(params)) {
+      text = text.replaceAll(`{${name}}`, String(value))
+    }
+  }
+  return text
+}
+
 describe('TrajectoryTurnHeader', () => {
   it('renders Turn N and the four metric column labels', () => {
-    render(<TrajectoryTurnHeader turn={1} />)
+    render(<TrajectoryTurnHeader turn={1} t={t} />)
     expect(screen.getByText('Turn 1')).toBeTruthy()
     expect(screen.getByText('Input')).toBeTruthy()
     expect(screen.getByText('Output')).toBeTruthy()
@@ -45,7 +58,7 @@ describe('TrajectoryGroupHeader', () => {
 describe('TrajectoryTurn', () => {
   it('wraps a sticky header and body children', () => {
     render(
-      <TrajectoryTurn turn={3}>
+      <TrajectoryTurn turn={3} t={t}>
         <TrajectoryGroupHeader title="Message" description="49s" />
       </TrajectoryTurn>,
     )

@@ -31,8 +31,8 @@ import { createChatStore } from '@deepseek-ai/dsh-client-ui-conversation/src/cli
 import { zh as conversationZh } from '@deepseek-ai/dsh-client-ui-conversation/src/client/locales.ts'
 import { apply as localeApply, inject as localeInject } from '@deepseek-ai/dsh-client-locale/client'
 import { stubSettingsScope } from '@deepseek-ai/dsh-client-test-runtime'
-import type { LocaleKeysOf } from '@deepseek-ai/dsh-client-ui-slots'
-import { zh, type TrajectoryKey } from '../src/client/locales.ts'
+import type { LocaleKeysOf, TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
+import { en, zh, type NS, type TrajectoryKey } from '../src/client/locales.ts'
 import { apply, inject } from '@deepseek-ai/dsh-client-ui-trajectory/client'
 import { apply as nodeApply } from '@deepseek-ai/dsh-client-ui-trajectory'
 import type { TrajectoryTurnModel } from '../src/client/layout.ts'
@@ -48,6 +48,16 @@ const SID = 's1' as SessionId
 const sessionSnapshots = new WeakMap<SlotRegistry, SnapshotStore<ConversationSnapshot>>()
 const tConversation: ConversationSessionHeaderProps['t'] =
   key => (conversationZh as Record<string, string>)[key] ?? key
+const t: TranslateNS<typeof NS> = (key, params) => {
+  const dictionary = en as Record<string, string>
+  let text = dictionary[key] ?? key
+  if (params !== undefined) {
+    for (const [name, value] of Object.entries(params)) {
+      text = text.replaceAll(`{${name}}`, String(value))
+    }
+  }
+  return text
+}
 
 afterEach(cleanup)
 // The chat store persists under its declared key; clear so one case's active
@@ -160,6 +170,7 @@ function emptyWorkspaces() {
 function standaloneProps(
   nodes: ConversationSnapshot['nodes'],
 ): ConvViewProps & { t: (key: LocaleKeysOf<'trajectory'>) => string } {
+  const dictionary = zh as Record<string, string>
   return {
     sessionId: SID,
     useSession: fakeSession(nodes).useSession,
@@ -167,7 +178,15 @@ function standaloneProps(
     useWorkspaces: emptyWorkspaces(),
     useProjection: (() => undefined) as never,
     // The locale seat the outlet would inject for the declared namespace.
-    t: (key: LocaleKeysOf<'trajectory'>) => zh[key as TrajectoryKey] ?? key,
+    t: (key: LocaleKeysOf<'trajectory'>, params?: Record<string, unknown>) => {
+      let text = dictionary[key] ?? key
+      if (params !== undefined) {
+        for (const [name, value] of Object.entries(params)) {
+          text = text.replaceAll(`{${name}}`, String(value))
+        }
+      }
+      return text
+    },
   } as unknown as ConvViewProps & { t: (key: LocaleKeysOf<'trajectory'>) => string }
 }
 
@@ -248,7 +267,15 @@ function mount(slots: SlotRegistry, nodes: ConversationSnapshot['nodes'] = NODES
           loadOlder: trajectory.loadOlder,
           setActualDuration: trajectory.setActualDuration,
           useDuration: bindSnapshotSelector(trajectory.hooks.duration),
-          t: (key: TrajectoryKey) => zh[key],
+          t: (key: TrajectoryKey, params?: Record<string, unknown>) => {
+            let text = zh[key]
+            if (params !== undefined) {
+              for (const [name, value] of Object.entries(params)) {
+                text = text.replaceAll(`{${name}}`, String(value))
+              }
+            }
+            return text
+          },
         }
       })()
       : injected
@@ -647,6 +674,7 @@ describe('timeline projection', () => {
           mode="duration"
           range={null}
           onRangeChange={vi.fn()}
+          t={t}
         />,
       )
       const span = view.container.querySelector<HTMLElement>(
@@ -679,6 +707,7 @@ describe('timeline projection', () => {
         hasEarlierRecords
         onLoadEarlier={onLoadEarlier}
         onRangeChange={vi.fn()}
+        t={t}
       />,
     )
 
@@ -702,6 +731,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={null}
         onRangeChange={vi.fn()}
+        t={t}
       />,
     )
     expect(screen.queryByLabelText('Load earlier history')).toBeNull()
@@ -715,6 +745,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={null}
         onRangeChange={vi.fn()}
+        t={t}
       />,
     )
     const plot = screen.getByLabelText('Timeline overview; drag horizontally to focus events')
@@ -737,6 +768,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={null}
         onRangeChange={vi.fn()}
+        t={t}
       />,
     )
     const span = view.container.querySelector<HTMLElement>('[data-timeline-span]')
@@ -764,6 +796,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={null}
         onRangeChange={vi.fn()}
+        t={t}
       />,
     )
 
@@ -782,6 +815,7 @@ describe('timeline projection', () => {
         range={{ start: 2, end: 4 }}
         hasEarlierRecords
         onRangeChange={onRangeChange}
+        t={t}
       />,
     )
     const plot = screen.getByLabelText('Timeline overview; drag horizontally to focus events')
@@ -813,6 +847,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={{ start: 2, end: 4 }}
         onRangeChange={onRangeChange}
+        t={t}
       />,
     )
     const plot = screen.getByLabelText('Timeline overview; drag horizontally to focus events')
@@ -832,6 +867,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={{ start: 2, end: 4 }}
         onRangeChange={onRangeChange}
+        t={t}
       />,
     )
     const plot = screen.getByLabelText('Timeline overview; drag horizontally to focus events')
@@ -862,6 +898,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={null}
         onRangeChange={onRangeChange}
+        t={t}
       />,
     )
     const plot = screen.getByLabelText('Timeline overview; drag horizontally to focus events')
@@ -878,6 +915,7 @@ describe('timeline projection', () => {
         range={null}
         selectedIndex={1}
         onRangeChange={onRangeChange}
+        t={t}
       />,
     )
     await vi.waitFor(() => {
@@ -894,6 +932,7 @@ describe('timeline projection', () => {
         range={null}
         selectedIndex={8}
         onRangeChange={onRangeChange}
+        t={t}
       />,
     )
     await vi.waitFor(() => {
@@ -912,6 +951,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={null}
         onRangeChange={onRangeChange}
+        t={t}
       />,
     )
     const plot = screen.getByLabelText('Timeline overview; drag horizontally to focus events')
@@ -988,6 +1028,7 @@ describe('timeline projection', () => {
         mode="sequence"
         range={null}
         onRangeChange={() => {}}
+        t={t}
       />,
     )
 

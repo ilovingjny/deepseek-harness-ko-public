@@ -5,6 +5,8 @@ import {
   type PointerEvent,
 } from 'react'
 import { Tooltip } from '@deepseek-ai/dsh-client-ui-primitives'
+import type { TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
+import type { NS } from './locales.ts'
 import type { TrajectoryTurnModel } from './layout.ts'
 import type { AssistantMetricDetail, TrajectoryCellKind, TrajectoryCellProps } from './trajectory-record.ts'
 import {
@@ -144,6 +146,8 @@ export interface TrajectoryTimelineProps {
   onRecordSelect?: (index: number) => void
   /** Bring the nearest record into view after clicking timeline whitespace. */
   onRecordFocus?: (index: number) => void
+  /** Translate a timeline dictionary key. */
+  t: TranslateNS<typeof NS>
 }
 
 function orderedRange(left: number, right: number): FractionRange {
@@ -185,12 +189,12 @@ function rangeFraction(
   }
 }
 
-function LaneLabels() {
+function LaneLabels({ t }: { t: TranslateNS<typeof NS> }) {
   return (
     <div className={css.labels} aria-hidden="true">
-      <span>Input</span>
-      <span>Model</span>
-      <span>Tools</span>
+      <span>{t('timeline.input')}</span>
+      <span>{t('timeline.model')}</span>
+      <span>{t('timeline.tools')}</span>
     </div>
   )
 }
@@ -243,6 +247,7 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
   onRangeChange,
   onRecordSelect,
   onRecordFocus,
+  t,
 }: TrajectoryTimelineProps) {
   const model = useMemo(() => deriveTrajectoryTimeline(turns, mode), [mode, turns])
   const detailByIndex = useMemo(
@@ -382,9 +387,9 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
     return (
       <section ref={rootRef} className={css.root} aria-label="Trajectory timeline">
         <div className={css.plot}>
-          <LaneLabels />
+          <LaneLabels t={t} />
           <div className={css.track}>
-            <span className={css.empty}>No timing data</span>
+            <span className={css.empty}>{t('timeline.noTimingData')}</span>
             {hasEarlierRecords && (
               <EarlierHistoryBoundary
                 loading={loadingEarlier}
@@ -577,7 +582,7 @@ export const TrajectoryTimeline = memo(function TrajectoryTimeline({
   return (
     <section ref={rootRef} className={css.root} aria-label="Trajectory timeline">
       <div className={css.plot}>
-        <LaneLabels />
+        <LaneLabels t={t} />
         <div
           ref={trackRef}
           className={css.track}

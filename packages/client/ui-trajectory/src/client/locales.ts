@@ -54,6 +54,7 @@ export type TrajectoryKey =
   | 'details.status'
   | 'details.provider'
   | 'details.model'
+  | 'details.error'
   | 'details.openToolCallSummary'
   | 'details.openBlockToolCallSummary'
   | 'layout.message'
@@ -123,6 +124,7 @@ export const zh: Record<TrajectoryKey, string> = {
   'details.status': 'Status',
   'details.provider': 'Provider',
   'details.model': 'Model',
+  'details.error': 'Error',
   'details.openToolCallSummary': 'Open tool call summary',
   'details.openBlockToolCallSummary': 'Open Block #{index} tool call summary',
   'layout.message': 'Message',
@@ -186,6 +188,7 @@ export const en: Record<TrajectoryKey, string> = {
   'details.status': 'Status',
   'details.provider': 'Provider',
   'details.model': 'Model',
+  'details.error': 'Error',
   'details.openToolCallSummary': 'Open tool call summary',
   'details.openBlockToolCallSummary': 'Open Block #{index} tool call summary',
   'layout.message': 'Message',
@@ -249,6 +252,7 @@ export const ko: Record<TrajectoryKey, string> = {
   'details.status': '상태',
   'details.provider': '제공자',
   'details.model': '모델',
+  'details.error': '오류',
   'details.openToolCallSummary': '도구 호출 요약 열기',
   'details.openBlockToolCallSummary': '블록 #{index} 도구 호출 요약 열기',
   'layout.message': '메시지',

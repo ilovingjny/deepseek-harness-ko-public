@@ -123,6 +123,34 @@ describe('translate: tool calls', () => {
     ])
   })
 
+  it('keeps id and name when continuation deltas blank them out', async () => {
+    // Captured from a live deepseek-official session (2026-08-17): continuation
+    // deltas do not omit the identity fields, they send `id: ''` and `name: null`.
+    // An `!== undefined` guard let those blanks win, so every call closed as
+    // `{id: '', name: ''}` and the dispatcher answered `unknown tool ""`.
+    const chunks = await collect(translate(feed(
+      firstChunk,
+      { choices: [{ delta: { tool_calls: [{ index: 0, id: 'call_34a885', type: 'function', function: { name: 'bash', arguments: '' } }] } }] },
+      { choices: [{ delta: { tool_calls: [{ index: 0, id: '', function: { name: null, arguments: '{' } }] } }] },
+      { choices: [{ delta: { tool_calls: [{ index: 0, id: '', function: { name: null, arguments: '"command": "pwd"}' } }] } }] },
+      { choices: [{ delta: {}, finish_reason: 'tool_calls' }] },
+      DONE,
+    )))
+    expect(chunks.filter(chunk => chunk.type === 'block-end')).toEqual([
+      {
+        type: 'block-end',
+        index: 0,
+        block: { type: 'tool-call', id: 'call_34a885', name: 'bash', arguments: '{"command": "pwd"}' },
+      },
+    ])
+    // Every streamed delta keeps the identity too — the GUI renders from these.
+    expect(chunks.filter(chunk => chunk.type === 'tool-call-delta')).toEqual([
+      { type: 'tool-call-delta', index: 0, id: 'call_34a885', name: 'bash', argumentsDelta: '' },
+      { type: 'tool-call-delta', index: 0, id: 'call_34a885', name: 'bash', argumentsDelta: '{' },
+      { type: 'tool-call-delta', index: 0, id: 'call_34a885', name: 'bash', argumentsDelta: '"command": "pwd"}' },
+    ])
+  })
+
   it('disambiguates parallel tool calls by wire index', async () => {
     const chunks = await collect(translate(feed(
       firstChunk,

@@ -156,8 +156,13 @@ export async function* translate(payloads: AsyncIterable<string>): AsyncGenerato
           toolBlocks.set(call.index, block)
           yield { type: 'block-start', index: block.index, blockType: 'tool-call' }
         }
-        if (call.id !== undefined) block.callId = call.id
-        if (call.function?.name !== undefined) block.name = call.function.name
+        // Identity arrives once, on the call's first delta; continuation deltas carry
+        // only argument fragments. DeepSeek does not omit the identity fields there —
+        // it sends `id: ''` and `name: null` — so an `!== undefined` guard lets those
+        // blanks overwrite the real values and the call closes as `{id: '', name: ''}`,
+        // which the tool dispatcher rejects as `unknown tool ""`. First non-blank wins.
+        if (call.id) block.callId = call.id
+        if (call.function?.name) block.name = call.function.name
         const fragment = call.function?.arguments ?? ''
         block.text += fragment
         yield {

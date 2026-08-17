@@ -1,61 +1,39 @@
-# DeepSeek Harness
+# DeepSeek Harness — Korean UI Locale Pack (ko-KR)
 
-English | [中文](README.zh.md)
-
-> [!IMPORTANT]
+> **Unofficial** community fork. This repository is **not** an official DeepSeek distribution. It adds a Korean browser UI on top of the upstream [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 >
-> This private downstream adds a Korean browser UI and an isolated `dsh-ko` launcher while preserving the official `dsh` installation. See the [Korean fork guide](PRIVATE_FORK_KO.md) for installation, verification, maintenance, and known limitations.
+> 비공식 커뮤니티 포크입니다. 공식 DeepSeek 배포판이 아니며, 상위 프로젝트 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)에 한국어 브라우저 UI를 얹은 저장소입니다.
 
-DeepSeek Harness (`dsh`) is an open-source agent harness developed by [DeepSeek AI](https://deepseek.com).
+## What's included / 내용
 
-It uses an architecture where **everything is a plugin**, and is powered by [Cordis](https://github.com/cordiverse/cordis), whose design is described in [_A Programming Paradigm for Spatiotemporal Composability_](https://github.com/cordiverse/paper).
+- **Korean dictionary (`ko.ts`)** based on `packages/client/locale` — common buttons/menus, settings screens, system messages
+  `packages/client/locale` 기반 한국어 사전 — 공통 버튼/메뉴·설정 화면·시스템 메시지 번역
+- **ko-KR auto-detection** via `locale.preference: ko`
+  `locale.preference: ko` 설정 시 ko-KR 자동 감지
+- **`korean-coverage` test** that catches missing translation keys
+  번역 누락을 잡는 korean-coverage 테스트
+- **Ready-made OpenCode Go config (`local-tools/settings.ko.yaml`)** — set `OPENCODE_GO_API_KEY` once and connect DeepSeek V4 Flash (default) / V4 Pro via `https://opencode.ai/zen/go/v1`
+  OpenCode Go 사용자를 위한 즉시 연결 설정 — API 키 하나로 DeepSeek V4 Flash(기본)/V4 Pro를 바로 연결
 
-## Developer preview
+## Notes from the work / 작업 기록
 
-DeepSeek Harness is currently in _developer preview_ and is iterating rapidly. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
+Key inventory, translation process, and verification gates are all documented. We hope these notes help not only Korean users, but also people who want to translate Harness into **their own language** — the locale structure and test approach are designed to be easy to extend.
 
-## Run
+번역 키 인벤토리·진행 과정·검증 게이트를 문서로 남겨뒀어요. 이 기록이 한국어 사용자분들뿐 아니라 **다른 언어 번역을 시도하시는 분들에게도 참고 자료가 되었으면** 하는 바람입니다. 로케일 구조와 테스트 방식이 다른 언어로 확장하기 쉽게 되어 있어요.
 
-### Run from `npm`
+## Safety / 안전성
 
-Install `Node.js`, then run:
+- 0 existing dictionary key/value changed; only new keys added
+  기존 사전 키·값 변경 0건, 신규 키 추가만
+- Full test suite 3761 passing; locale + ui-trajectory 150 passed
+  전체 테스트 3761개 유지, locale+ui-trajectory 150 passed
 
-```sh
-npx @deepseek-ai/dsh web
-```
+## Feedback
 
-The command starts the Web UI, served at `http://127.0.0.1:3080` by default. See [Web UI guide](docs/user/guide/index.md).
+Feedback is always welcome — please open an issue or start a discussion!
 
-### Run from source
+피드백은 언제나 환영입니다 — 이슈나 디스커션으로 남겨주세요!
 
-To run from a repository checkout:
+---
 
-```sh
-git clone https://github.com/deepseek-ai/deepseek-harness.git
-cd deepseek-harness
-pnpm install
-pnpm run build
-pnpm dsh web
-```
-
-## Community and support
-
-- Feel free to submit feedback or bug reports through [GitHub Discussions](https://github.com/deepseek-ai/deepseek-harness/discussions).
-- Add the [`dsh-plugin`](https://github.com/topics/dsh-plugin) topic to your plugin repository for discoverability.
-- Join <a href="https://discord.gg/Ycq5dCaS4">DeepSeek Harness Discord community</a>.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Development
-
-Start with the [development guide](docs/development.md) and [architecture documentation](docs/architecture.md).
-
-For agents, follow [AGENTS.md](AGENTS.md).
-
-## License
-
-[MIT](LICENSE)
-
-Third-party dependencies and their licenses are disclosed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Upstream: [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) · License: [MIT](LICENSE)
